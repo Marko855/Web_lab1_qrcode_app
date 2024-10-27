@@ -6,7 +6,8 @@ require('dotenv').config();
 const path = require('path');
 const { auth, requiresAuth } = require('express-openid-connect'); 
 const { v4: uuidv4, validate: uuidValidate } = require('uuid');
-
+const jwt = require('jsonwebtoken');
+const jwksClient = require('jwks-rsa');
 const app = express();
 
 app.use(cors());
@@ -33,7 +34,38 @@ const config = {
 
 app.use(auth(config));
 
-app.post('/tickets', async (req, res) => {
+const client = jwksClient({
+    jwksUri: `https://${process.env.AUTH0_DOMAIN}/.well-known/jwks.json`
+});
+
+function getKey(header, callback) {
+    client.getSigningKey(header.kid, (err, key) => {
+        const signingKey = key.publicKey || key.rsaPublicKey;
+        callback(null, signingKey);
+    });
+}
+
+function checkJwt(req, res, next) {
+    const token = req.headers.authorization?.split(' ')[1];
+    if (!token) {
+        return res.status(401).send('Unauthorized: No token provided');
+    }
+
+    jwt.verify(token, getKey, {
+        audience: process.env.AUTH0_AUDIENCE,
+        issuer: `https://${process.env.AUTH0_DOMAIN}/`,
+        algorithms: ['RS256']
+    }, (err, decoded) => {
+        if (err) {
+            console.error('JWT verification failed:', err);
+            return res.status(401).send('Unauthorized: Invalid token');
+        }
+        req.decoded = decoded;
+        next();
+    });
+}
+
+app.post('/tickets',checkJwt , async (req, res) => {
     const { vatin, firstName, lastName } = req.body;
     console.log("Received request to generate ticket:", req.body);
 
