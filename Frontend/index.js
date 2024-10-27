@@ -14,7 +14,7 @@ app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
-const port = process.env.PORT || 4001;
+const port = process.env.PORT_FRONTEND || 4001;
 app.listen(port, () => {
     console.log(`Frontend running at http://localhost:${port}`);
 });

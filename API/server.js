@@ -26,7 +26,7 @@ const config = {
     authRequired: false,
     auth0Logout: true,
     secret: process.env.AUTH0_CLIENT_SECRET,
-    baseURL: `http://localhost:${process.env.PORT}`,
+    baseURL: `http://localhost:${process.env.PORT_BACKEND}`,
     clientID: process.env.AUTH0_CLIENT_ID,
     issuerBaseURL: `https://${process.env.AUTH0_DOMAIN}`,
 };
@@ -175,7 +175,7 @@ app.get('/ticketCount', async (req, res) => {
 });
 
 
-const port = process.env.PORT || 4001;
+const port = process.env.PORT_BACKEND || 4001;
 app.listen(port, () => {
     console.log(`API running at http://localhost:${port}`);
 });
