@@ -112,7 +112,7 @@ app.post('/tickets',checkJwt , async (req, res) => {
     }
 });
 
-app.get('/tickets/:id' ,/*requiresAuth()*/ async (req, res) => {
+app.get('/tickets/:id' ,requiresAuth() ,async (req, res) => {
     console.log("User is authenticated:", req.oidc.isAuthenticated());
     console.log("Session data:", req.oidc);
     const ticketId = req.params.id;
