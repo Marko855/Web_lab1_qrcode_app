@@ -26,7 +26,7 @@ const config = {
     authRequired: false,
     auth0Logout: true,
     secret: process.env.AUTH0_CLIENT_SECRET,
-    baseURL: `http://localhost:${process.env.PORT_BACKEND}`,
+    baseURL: `https://web-lab1-qrcode-app-backend.onrender.com`,
     clientID: process.env.AUTH0_CLIENT_ID,
     issuerBaseURL: `https://${process.env.AUTH0_DOMAIN}`,
 };
@@ -95,7 +95,7 @@ app.post('/tickets',checkJwt , async (req, res) => {
             return res.status(500).json({ message: 'Failed to generate ticket' });
         }
 
-       const qrCodeUrl = `http://localhost:${process.env.PORT}/tickets/${ticketId}`;
+       const qrCodeUrl = `https://web-lab1-qrcode-app-backend.onrender.com/tickets/${ticketId}`;
 
        const qrCodeBuffer = await QRCode.toBuffer(qrCodeUrl, { type: 'png' });
 
