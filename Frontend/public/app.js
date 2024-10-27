@@ -1,6 +1,6 @@
 const AUTH0_DOMAIN = 'dev-vxlnpyk7pyklbtwf.us.auth0.com'; 
 const AUTH0_CLIENT_ID = 'nLEhKOcZnSv98JCuLN7mQAEMsfAHWcnu'; 
-const AUTH0_CALLBACK_URL = 'http://localhost:4001'; 
+const AUTH0_CALLBACK_URL = 'https://web-lab1-qrcode-app.onrender.com'; 
 const AUTH0_LOGOUT_URL = `https://${AUTH0_DOMAIN}/v2/logout?client_id=${AUTH0_CLIENT_ID}&returnTo=${AUTH0_CALLBACK_URL}`; 
 const AUTH0_AUDIENCE= `https://api.dananic-lab1.com`;
 
@@ -68,7 +68,7 @@ function updateUI() {
 
 async function fetchTicketCount() {
     try {
-        const response = await fetch('http://localhost:4000/ticketCount'); 
+        const response = await fetch('https://web-lab1-qrcode-app-backend.onrender.com/ticketCount'); 
 
         if (response.ok) {
             const data = await response.json();
