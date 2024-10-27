@@ -5,7 +5,7 @@ const { Pool } = require('pg');
 require('dotenv').config();
 const path = require('path');
 const { auth, requiresAuth } = require('express-openid-connect'); 
-const { v4: uuidv4, validate: uuidValidate } = require('uuid');
+const { v4: uuidv4} = require('uuid');
 const jwt = require('jsonwebtoken');
 const jwksClient = require('jwks-rsa');
 const app = express();
